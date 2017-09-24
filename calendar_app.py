@@ -2,26 +2,30 @@ import argparse
 from utils import xl_util
 
 from tkinter import *
+from tkinter import ttk
 
 __author__ = "NAMAN AVASTHI"
 
 root = Tk()
 
-root.geometry("600x400")
+root.geometry('{}x{}'.format(800, 450))
 
-root.title("Naman Avasthi iCal APP")
+root.wm_title("iCal APP by Naman Avasthi")
 
-label1 = Label(root, text="Excel File Location : ")
-E1 = Entry(root, bd=2)
+row = 2
+col = 2
 
-label2 = Label(root, text="Name to Search : ")
-E2 = Entry(root, bd=2)
+label1 = Label(root, text="Excel File Location : ", font=("Helvetica", 16))
+E1 = Entry(root)
 
-label3 = Label(root, text="Mail address : ")
-E3 = Entry(root, bd=2)
+label2 = Label(root, text="Name to Search : ", font=("Helvetica", 16))
+E2 = Entry(root)
 
-label4 = Label(root, text="Where To Save Path : ")
-E4 = Entry(root, bd=2)
+label3 = Label(root, text="Mail address : ", font=("Helvetica", 16))
+E3 = Entry(root)
+
+label4 = ttk.Label(root, text="Where To Save Path : ", font=("Helvetica", 16))
+E4 = ttk.Entry(root)
 
 
 def quit_program():
@@ -29,7 +33,7 @@ def quit_program():
     root.quit()
 
 
-def destry_ui_components():
+def destroy_ui_components():
     E1.destroy()
     E2.destroy()
     E3.destroy()
@@ -51,29 +55,32 @@ def get_date():
                                                 mail_address=address_to_send, save_path=path_save_at)
 
     if file_return_value == 0:
-        issue = Label(root, text="Something went Wrong! Please Check Inputs Again")
-        issue.pack()
-        resolve = Label(root, text="Contact Developer for possible solutions at navasthi@usc.edu")
-        resolve.pack()
+        destroy_ui_components()
+        issue = ttk.Label(root, text="Something went Wrong! Please Check Inputs Again", font=("Helvetica", 16))
+        issue.grid(row=2, column=2)
+        resolve = ttk.Label(root, text="Contact Developer for possible solutions at navasthi@usc.edu",
+                            font=("Helvetica", 16))
+        resolve.grid(row=3, column=2)
     else:
-        destry_ui_components()
-        success = Label(root, text="SUCCESS! Calendar Events created at " + path_save_at)
-        success.pack(side=TOP)
+        destroy_ui_components()
+        success = Label(root, text="SUCCESS! Calendar Events created at " + path_save_at, font=("Helvetica", 16))
+        success.grid(row=2, column=2)
 
 
 submit = Button(root, text="Submit", command=get_date)
 exit_button = Button(root, text="Exit", command=quit_program)
 
-label1.grid(row=0,column=0,sticky=W)
-E1.pack()
-label2.pack()
-E2.pack()
-label3.pack()
-E3.pack()
-label4.pack()
-E4.pack()
-submit.pack(side=BOTTOM)
-exit_button.pack(side=BOTTOM)
+label1.grid(row=2, column=2)
+E1.grid(row=row, column=col + 1)
+label2.grid(row=row + 1, column=col)
+E2.grid(row=row + 1, column=col + 1)
+label3.grid(row=row + 2, column=col)
+E3.grid(row=row + 2, column=col + 1)
+label4.grid(row=row + 3, column=col)
+E4.grid(row=row + 3, column=col + 1)
+submit.grid(row=row + 4, column=col)
+exit_button.grid(row=row + 5, column=col)
+
 root.mainloop()
 
 
